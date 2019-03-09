@@ -2,11 +2,14 @@
 
 namespace App;
 
-use App\Task;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,7 +20,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes excluded from the model's JSON form.
+     * The attributes that should be hidden for arrays.
      *
      * @var array
      */
@@ -26,10 +29,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get all of the tasks for the user.
+     * The attributes that should be cast to native types.
+     *
+     * @var array
      */
-    public function tasks()
-    {
-        return $this->hasMany(Task::class);
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
